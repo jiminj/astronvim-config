@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -44,7 +44,10 @@ return {
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+        wrap = true, -- sets vim.opt.wrap
+        colorcolumn = "81",
+        swapfile = false,
+        smartindent = true,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -58,6 +61,24 @@ return {
       -- first key is the mode
       n = {
         -- second key is the lefthand side of the map
+        ["<Leader>c"] = false,
+        ["<Leader>C"] = false,
+        ["<Leader>bc"] = {
+          function() require("astrocore.buffer").close() end,
+          desc = "Close buffer",
+        },
+        ["<Leader>bC"] = {
+          function() require("astrocore.buffer").close(0, true) end,
+          desc = "Force close buffer",
+        },
+        ["<Leader>ba"] = {
+          function() require("astrocore.buffer").close_all(true) end,
+          desc = "Close all buffers except current",
+        },
+        ["<Leader>bA"] = {
+          function() require("astrocore.buffer").close_all() end,
+          desc = "Close all buffers",
+        },
 
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
@@ -71,6 +92,17 @@ return {
             )
           end,
           desc = "Close buffer from tabline",
+        },
+
+        ["<Leader>o"] = {
+          function()
+            if vim.bo.filetype == "neo-tree" then
+              vim.cmd.wincmd "p"
+            else
+              vim.cmd.Neotree "source=last"
+            end
+          end,
+          desc = "Toggle Explorer Focus",
         },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
