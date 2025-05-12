@@ -18,29 +18,47 @@ return {
 
   -- == Examples of Overriding Plugins ==
 
-  -- customize dashboard options
-  -- {
-  --   "folke/snacks.nvim",
-  --   opts = {
-  --     dashboard = {
-  --       preset = {
-  --         header = table.concat({
-  --           " █████  ███████ ████████ ██████   ██████ ",
-  --           "██   ██ ██         ██    ██   ██ ██    ██",
-  --           "███████ ███████    ██    ██████  ██    ██",
-  --           "██   ██      ██    ██    ██   ██ ██    ██",
-  --           "██   ██ ███████    ██    ██   ██  ██████ ",
-  --           "",
-  --           "███    ██ ██    ██ ██ ███    ███",
-  --           "████   ██ ██    ██ ██ ████  ████",
-  --           "██ ██  ██ ██    ██ ██ ██ ████ ██",
-  --           "██  ██ ██  ██  ██  ██ ██  ██  ██",
-  --           "██   ████   ████   ██ ██      ██",
-  --         }, "\n"),
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      styles = {
+        input = {
+          relative = "cursor",
+          row = -3,
+          col = 0,
+        },
+      },
+      picker = {
+        formatters = {
+          file = {
+            truncate = 100,
+          },
+        },
+        -- ---@class snacks.picker.previewers.Config
+        -- previewers = {
+        -- }
+      },
+
+      -- customize dashboard options
+      --     dashboard = {
+      --       preset = {
+      --         header = table.concat({
+      --           " █████  ███████ ████████ ██████   ██████ ",
+      --           "██   ██ ██         ██    ██   ██ ██    ██",
+      --           "███████ ███████    ██    ██████  ██    ██",
+      --           "██   ██      ██    ██    ██   ██ ██    ██",
+      --           "██   ██ ███████    ██    ██   ██  ██████ ",
+      --           "",
+      --           "███    ██ ██    ██ ██ ███    ███",
+      --           "████   ██ ██    ██ ██ ████  ████",
+      --           "██ ██  ██ ██    ██ ██ ██ ████ ██",
+      --           "██  ██ ██  ██  ██  ██ ██  ██  ██",
+      --           "██   ████   ████   ██ ██      ██",
+      --         }, "\n"),
+      --       },
+      --     },
+    },
+  },
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },

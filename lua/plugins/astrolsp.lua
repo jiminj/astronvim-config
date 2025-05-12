@@ -46,6 +46,9 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      clangd = {
+        filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }, -- exclude "proto".
+      },
     },
     -- customize how language servers are attached
     handlers = {
