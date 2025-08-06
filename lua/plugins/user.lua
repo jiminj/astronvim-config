@@ -114,10 +114,6 @@ return {
     enabled = true,
   },
   {
-    "aznhe21/actions-preview.nvim",
-    commit = "8119874",
-  },
-  {
     "echasnovski/mini.diff",
     opts = {
       mappings = {
