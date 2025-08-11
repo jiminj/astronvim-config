@@ -45,7 +45,6 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      -- clangd = {  },
       clangd = {
         -- capabilities = { offsetEncoding = "utf-8" },
         filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }, -- exclude "proto".

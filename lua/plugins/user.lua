@@ -20,6 +20,9 @@ return {
 
   {
     "folke/snacks.nvim",
+    keys = {
+      { "<Leader>fH", function() require("snacks").picker.highlights() end, desc = "Find highlights" },
+    },
     opts = {
       styles = {
         input = {
@@ -155,12 +158,6 @@ return {
     config = function() require("spaceless").setup() end,
   },
   {
-    "catppuccin",
-    opts = {
-      flavour = "macchiato",
-    },
-  },
-  {
     "lewis6991/gitsigns.nvim",
     event = "User AstroFile",
     dependencies = {
@@ -214,12 +211,18 @@ return {
   --     { "mfussenegger/nvim-dap" },
   --   },
   -- },
+
   {
     "nvim-neotest/neotest",
+    lazy = true,
     dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
       "alfaix/neotest-gtest",
+      "mfussenegger/nvim-dap",
     },
-    opts = { adapters = { "neotest-gtest" } },
   },
   {
     "s1n7ax/nvim-window-picker",
@@ -241,51 +244,6 @@ return {
       }
     end,
   },
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   dependencies = {
-  --     "s1n7ax/nvim-window-picker",
-  --     {
-  --       "AstroNvim/astrocore",
-  --       opts = function(_, opts)
-  --         local maps = opts.mappings
-  --         maps.v["<Leader>f"] = vim.tbl_get(opts, "_map_sections", "f")
-  --         maps.v["<Leader>ff"] = {
-  --           function()
-  --             require("telescope.builtin").find_files {
-  --               default_text = get_visual_selection(),
-  --             }
-  --           end,
-  --           desc = "Find files",
-  --         }
-  --         if vim.fn.executable "rg" == 1 then
-  --           maps.v["<Leader>fw"] = {
-  --             function()
-  --               require("telescope.builtin").live_grep {
-  --                 default_text = get_visual_selection(),
-  --               }
-  --             end,
-  --             desc = "Find words",
-  --           }
-  --           maps.v["<Leader>fW"] = {
-  --             function()
-  --               require("telescope.builtin").live_grep {
-  --                 default_text = get_visual_selection(),
-  --                 additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
-  --               }
-  --             end,
-  --             desc = "Find words in all files",
-  --           }
-  --         end
-  --       end,
-  --     },
-  --     opts = {
-  --       defaults = {
-  --         get_selection_window = function() return require("window-picker").pick_window() or 0 end,
-  --       },
-  --     },
-  --   },
-  -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = {
@@ -309,17 +267,58 @@ return {
           require("snacks.picker").grep { cwd = path }
         end,
       },
-      event_handlers = {
-        --   {
-        --     event = "neo_tree_buffer_enter",
-        --     handler = function(arg)
-        --       vim.cmd [[
-        --         setlocal relativenumber
-        --       ]]
-        --     end,
-        --   },
+    },
+  },
+  {
+    "otavioschwanck/arrow.nvim",
+    dependencies = {
+      {
+        "echasnovski/mini.icons",
       },
     },
+    opts = {
+      show_icons = true,
+      leader_key = "<leader><leader>",
+      buffer_leader_key = "mb",
+      per_buffer_config = {
+        lines = 8,
+      },
+    },
+    keys = {
+      { "m", "", desc = "Arrow Buffer" },
+      { "mm", "<cmd>Arrow next_buffer_bookmark<cr>", desc = "Next Arrow Buffer Bookmark" },
+      { "mp", "<cmd>Arrow prev_buffer_bookmark<cr>", desc = "Previous Arrow Buffer Bookmark" },
+      { "ma", "<cmd>Arrow toggle_current_line_for_buffer<cr>", desc = "Toggle Arrow Bookmark" },
+    },
+    init = function()
+      local hl = vim.api.nvim_get_hl(0, { name = "Normal" })
+      hl.bold = true
+      vim.api.nvim_set_hl(0, "ArrowBookmarkSign", hl)
+    end,
+    specs = {
+      {
+        "rebelot/heirline.nvim",
+        optional = true,
+        opts = function(_, opts)
+          local arrow_statusline = require "arrow.statusline"
+          local arrow = {
+            condition = function() return arrow_statusline.is_on_arrow_file() end,
+            update = {
+              "BufEnter",
+            },
+            {
+              provider = function() return "[" .. arrow_statusline.text_for_statusline_with_icons() .. "] " end,
+              hl = { bold = true },
+            },
+          }
+          table.insert(opts.statusline, 5, arrow)
+        end,
+      },
+    },
+  },
+  {
+    "nvimdev/template.nvim",
+    cmd = { "Template" },
   },
   {
     "mrjones2014/smart-splits.nvim",

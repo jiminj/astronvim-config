@@ -13,7 +13,13 @@ require("lazy").setup({
   },
   { import = "community" },
   { import = "plugins" },
-  { import = "nvidia"},
+  {
+    import = "nvidia",
+    cond = function()
+      local rootpath = require("lspconfig.util").root_pattern ".clangd"(vim.fn.getcwd())
+      return rootpath and rootpath:find "ndas" ~= nil
+    end,
+  }, -- Load nvidia plugins conditionally
 } --[[@as LazySpec]], {
   -- Configure any other `lazy.nvim` configuration options here
   install = { colorscheme = { "astrotheme", "habamax" } },

@@ -51,4 +51,31 @@ return {
     },
     --   ft = { "cpp", "c", "h", "hpp", "cxx" },
   },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    opts = {
+      printf_statements = {
+        cpp = {
+          'std::cout << "%s" << std::endl;',
+        },
+      },
+      print_var_statements = {
+        -- add a custom print var statement for cpp
+        cpp = {
+          'std::cout << "%s = " << %s << std::endl;',
+        },
+      },
+
+      prompt_func_return_type = {
+        cpp = true,
+        c = true,
+      },
+
+      -- prompt for function parameters
+      prompt_func_param_type = {
+        cpp = true,
+        c = true,
+      },
+    },
+  },
 }
