@@ -16,6 +16,7 @@ return {
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.editing-support.bigfile-nvim" },
   { import = "astrocommunity.editing-support.dial-nvim" },
+  { import = "astrocommunity.editing-support.mcphub-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.undotree" },
   { import = "astrocommunity.git.blame-nvim" },

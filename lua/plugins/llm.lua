@@ -27,98 +27,51 @@ return {
     --   { "<leader>lc", "<cmd>Copilot panel<cr>", desc = "Panel" },
     -- },
   },
-  -- {
-  --   "Davidyz/VectorCode",
-  --   version = "*", -- optional, depending on whether you're on nightly or release
-  --   build = "uv tool upgrade vectorcode", -- This helps keeping the CLI up-to-date
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  -- },
-  -- {
-  --   "olimorris/codecompanion.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     {
-  --       "AstroNvim/astrocore",
-  --       opts = function(_, opts)
-  --         local maps = opts.mappings
-  --         maps.n["<Leader>a"] = {
-  --           "<cmd>CodeCompanionActions<CR>",
-  --           desc = require("astroui").get_icon("CodeCompanion", 1, true) .. "CodeCompanion Actions",
-  --         }
-  --         maps.v["<Leader>a"] = {
-  --           "<cmd>CodeCompanionActions<CR>",
-  --           desc = require("astroui").get_icon("CodeCompanion", 1, true) .. "CodeCompanion Actions",
-  --         }
-  --         maps.n["<Leader>C"] = {
-  --           "<cmd>CodeCompanionChat Toggle<CR>",
-  --           desc = require("astroui").get_icon("CodeCompanion", 1, true) .. "Toggle CodeCompanion",
-  --         }
-  --         maps.v["<Leader>C"] = {
-  --           "<cmd>CodeCompanionChat<CR>",
-  --           desc = require("astroui").get_icon("CodeCompanion", 1, true) .. "Open CodeCompanion",
-  --         }
-  --         maps.v["ga"] = {
-  --           "<cmd>CodeCompanionChat Add<cr>",
-  --           desc = "Add to CodeCompanion",
-  --         }
-  --       end,
-  --     },
-  --     { "AstroNvim/astroui", opts = { icons = { CodeCompanion = "󰘦 " } } },
-  --   },
-  --
-  --   opts = {
-  --     adapters = {
-  --       copilot = function()
-  --         return require("codecompanion.adapters").extend("copilot", {
-  --           schema = {
-  --             model = {
-  --               default = "claude-3.7-sonnet",
-  --             },
-  --           },
-  --         })
-  --       end,
-  --     },
-  --     display = {
-  --       chat = { show_settings = true },
-  --       diff = {
-  --         provider = "mini_diff",
-  --       },
-  --       inline = {
-  --         layout = "vertical", -- vertical|horizontal|buffer
-  --       },
-  --     },
-  --     extensions = {
-  --       vectorcode = {
-  --         opts = {
-  --           add_tool = true,
-  --           add_slash_command = true,
-  --           tool_opts = {},
-  --         },
-  --       },
-  --     },
-  --     strategies = {
-  --       -- Change the default chat adapter
-  --       chat = {
-  --         -- adapter = "nv_llama_3_3_70b",
-  --         adapter = "copilot",
-  --       },
-  --       inline = {
-  --         adapter = "copilot",
-  --         -- adapter = "nv_deepseek_r1",
-  --         -- adapter = "nv_llama_3_3_70b",
-  --       },
-  --       cmd = {
-  --         adapter = "copilot",
-  --       },
-  --     },
-  --     opts = {
-  --       -- log_level = "DEBUG", -- or "TRACE"
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     require("codecompanion").setup(opts)
-  --     vim.cmd [[cab cc CodeCompanion]]
-  --   end,
-  -- },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    version = false, -- Never set this value to "*"! Never!
+    opts = {
+      provider = "copilot",
+      providers = {
+        copilot = {
+          model = "claude-sonnet-4",
+        },
+      },
+    },
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+    },
+  },
+  {
+    "NickvanDyke/opencode.nvim",
+    keys = {
+      { "<leader>At", function() require("opencode").toggle() end, desc = "Toggle embedded opencode" },
+      { "<leader>Aa", function() require("opencode").ask "@cursor: " end, desc = "Ask opencode", mode = "n" },
+      {
+        "<leader>Aa",
+        function() require("opencode").ask "@selection: " end,
+        desc = "Ask opencode about selection",
+        mode = "v",
+      },
+      {
+        "<leader>Ap",
+        function() require("opencode").select_prompt() end,
+        desc = "Select prompt",
+        mode = { "n", "v" },
+      },
+      { "<leader>An", function() require("opencode").command "session_new" end, desc = "New session" },
+      { "<leader>Ay", function() require("opencode").command "messages_copy" end, desc = "Copy last message" },
+      {
+        "<S-C-u>",
+        function() require("opencode").command "messages_half_page_up" end,
+        desc = "Scroll messages up",
+      },
+      {
+        "<S-C-d>",
+        function() require("opencode").command "messages_half_page_down" end,
+        desc = "Scroll messages down",
+      },
+    },
+  },
 }

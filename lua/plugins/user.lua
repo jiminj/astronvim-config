@@ -204,6 +204,21 @@ return {
       { "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", desc = "Peek References" },
     },
   },
+  {
+    "mfussenegger/nvim-dap",
+    lazy = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>dU"] = { function() require("dap").up() end, desc = "Stack Frame Up" }
+          maps.n["<Leader>dD"] = { function() require("dap").down() end, desc = "Stack Frame Down" }
+        end,
+      },
+    },
+  },
+
   -- {
   --   "ldelossa/nvim-dap-projects",
   --   config = function() require("nvim-dap-projects").search_project_config() end,
@@ -226,23 +241,27 @@ return {
   },
   {
     "s1n7ax/nvim-window-picker",
-    config = function()
-      require("window-picker").setup {
-        selection_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-        show_prompt = false,
-        filter_rules = {
-          include_current_win = true,
-          autoselect_one = true,
-          -- filter using buffer options
-          bo = {
-            -- if the file type is one of following, the window will be ignored
-            filetype = { "neo-tree", "neo-tree-popup", "notify", "noice", "blame", "undotree" },
-            -- if the buffer type is one of following, the window will be ignored
-            buftype = { "terminal", "quickfix" },
-          },
+    opts = {
+      selection_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+      show_prompt = false,
+      hint = "statusline-winbar",
+      filter_rules = {
+        include_current_win = true,
+        autoselect_one = true,
+        -- filter using buffer options
+        bo = {
+          -- if the file type is one of following, the window will be ignored
+          filetype = { "neo-tree", "neo-tree-popup", "notify", "noice", "blame", "undotree" },
+          -- if the buffer type is one of following, the window will be ignored
+          buftype = { "terminal", "quickfix" },
         },
-      }
-    end,
+      },
+      picker_config = {
+        statusline_winbar_picker = {
+          use_winbar = "never",
+        },
+      },
+    },
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -279,14 +298,14 @@ return {
     opts = {
       show_icons = true,
       leader_key = "<leader><leader>",
-      buffer_leader_key = "mb",
+      buffer_leader_key = "mm",
       per_buffer_config = {
         lines = 8,
       },
     },
     keys = {
       { "m", "", desc = "Arrow Buffer" },
-      { "mm", "<cmd>Arrow next_buffer_bookmark<cr>", desc = "Next Arrow Buffer Bookmark" },
+      { "mn", "<cmd>Arrow next_buffer_bookmark<cr>", desc = "Next Arrow Buffer Bookmark" },
       { "mp", "<cmd>Arrow prev_buffer_bookmark<cr>", desc = "Previous Arrow Buffer Bookmark" },
       { "ma", "<cmd>Arrow toggle_current_line_for_buffer<cr>", desc = "Toggle Arrow Bookmark" },
     },
@@ -339,5 +358,10 @@ return {
         style = "full",
       },
     },
+  },
+  {
+    "ravitemer/mcphub.nvim",
+    build = "npm install -g mcp-hub@latest",
+    config = function() require("mcphub").setup() end,
   },
 }
