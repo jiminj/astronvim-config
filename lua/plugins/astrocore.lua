@@ -33,9 +33,9 @@ return {
       -- filename = {
       --   [".foorc"] = "fooscript",
       -- },
-      -- pattern = {
-      --   [".*/etc/foo/.*"] = "fooscript",
-      -- },
+      pattern = {
+        --   [".*/etc/foo/.*"] = "fooscript",
+      },
     },
     -- vim options can be configured here
     options = {

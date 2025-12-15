@@ -22,6 +22,21 @@ return {
     "folke/snacks.nvim",
     keys = {
       { "<Leader>fH", function() require("snacks").picker.highlights() end, desc = "Find highlights" },
+      {
+        "<Leader>gC",
+        function()
+          require("snacks").picker.git_log {
+            current_file = true,
+            follow = true,
+            confirm = function(picker, item)
+              picker:close()
+              require("gitsigns").diffthis(item.commit)
+              -- find all windows with buffer name containing 'gitsigns:///'
+            end,
+          }
+        end,
+        desc = "Git commits (current file)",
+      },
     },
     opts = {
       styles = {
@@ -60,6 +75,10 @@ return {
       --         }, "\n"),
       --       },
       --     },
+    },
+
+    dependencies = {
+      "lewis6991/gitsigns.nvim",
     },
   },
 
@@ -115,6 +134,24 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     enabled = true,
+    keys = {
+      { "<leader>gW", "<cmd>Gitsigns toggle_word_diff<CR>", desc = "Toggle word diff" },
+    },
+    config = function(_, opts)
+      require("gitsigns").setup(opts) -- include the default astronvim config that calls the setup call
+      vim.api.nvim_create_autocmd("BufRead", {
+        pattern = "gitsigns:///*",
+        callback = function(data)
+          -- Set the filetype to 'gitcommit' for gitsigns buffers
+          vim.bo[data.buf].filetype = "gitsigns-buffer"
+          -- Optionally, you can also set other buffer options here, like 'buftype' or 'bufhidden'
+          -- vim.bo[data.buf].buftype = "nofile"
+          -- vim.bo[data.buf].bufhidden = "hide"
+        end,
+      })
+
+      -- add more custom gitsigns configuration such as keymaps
+    end,
   },
   {
     "echasnovski/mini.diff",
@@ -198,10 +235,11 @@ return {
     keys = {
       { "gp", "", desc = "Peek" },
       { "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", desc = "Peek Definition" },
-      { "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", desc = "Peek Type Definition" },
-      { "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", desc = "Peek Implementation" },
+      { "gpD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", desc = "Peek Definition" },
+      { "gpy", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", desc = "Peek Type Definition" },
+      { "gpI", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", desc = "Peek Implementation" },
       { "gpc", "<cmd>lua require('goto-preview').close_all_win()<CR>", desc = "Close all peek windows" },
-      { "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", desc = "Peek References" },
+      { "gpR", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", desc = "Peek References" },
     },
   },
   {
@@ -349,19 +387,55 @@ return {
     },
   },
   {
-    "MeanderingProgrammer/render-markdown.nvim",
-    opts = {
-      code = {
-        border = "thick",
-      },
-      pipe_table = {
-        style = "full",
-      },
-    },
-  },
-  {
     "ravitemer/mcphub.nvim",
     build = "npm install -g mcp-hub@latest",
     config = function() require("mcphub").setup() end,
+  },
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   opts = {
+  --     flavour = "macchiato",
+  --   },
+  -- },
+  {
+    "nvim-zh/colorful-winsep.nvim",
+    opts = {
+      animate = { enabled = false },
+    },
+    event = { "WinLeave" },
+  },
+  {
+    "folke/styler.nvim",
+    config = function()
+      require("styler").setup { themes = {} }
+
+      -- local group = vim.api.nvim_create_augroup("GitsignsStyler", { clear = true })
+      --
+      -- vim.api.nvim_create_autocmd("BufEnter", {
+      --   group = group,
+      --   pattern = "gitsigns:///*",
+      --   callback = function(ev)
+      --     -- apply a special colorscheme just for this window
+      --     require("styler").set_theme(0, {
+      --       colorscheme = "elflord",
+      --     })
+      --   end,
+      -- })
+      --
+      -- -- Optional: when leaving gitsigns buffers, restore default theme
+      -- vim.api.nvim_create_autocmd("BufLeave", {
+      --   group = group,
+      --   pattern = "gitsigns:///*",
+      --   callback = function(ev)
+      --     -- reset to your normal theme for that window
+      --     require("styler").set_theme(0, {
+      --       colorscheme = "tokyonight-storm",
+      --       background = "dark",
+      --     })
+      --   end,
+      -- })
+    end,
   },
 }
