@@ -68,78 +68,78 @@ return {
     --   { "<leader>lc", "<cmd>Copilot panel<cr>", desc = "Panel" },
     -- },
   },
-  {
-    "olimorris/codecompanion.nvim",
-    dependencies = {
-      -- Add mcphub.nvim as a dependency
-      "ravitemer/mcphub.nvim",
-    },
-    opts = {
-      memory = {
-        opts = {
-          chat = {
-            enabled = true,
-            default_memory = "default",
-          },
-        },
-      },
-      adapters = {
-        http = {
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "claude-sonnet-4.5",
-                },
-              },
-            })
-          end,
-          nv_inference = function()
-            return require("codecompanion.adapters").extend("azure_openai", {
-              env = {
-                api_key = vim.env.NV_INFERENCE_HUB_APIKEY,
-                endpoint = vim.env.NV_INFERENCE_HUB_URL,
-                chat_url = "/v1/chat/completions",
-              },
-              schema = {
-                model = {
-                  default = "azure/openai/gpt-5.1-codex",
-                },
-                max_tokens = {
-                  default = 2048,
-                },
-                temperature = {
-                  default = 0.9,
-                },
-              },
-            })
-          end,
-        },
-      },
-      extensions = {
-        mcphub = {
-          callback = "mcphub.extensions.codecompanion",
-          opts = {
-            make_vars = true,
-            make_slash_commands = true,
-            show_result_in_chat = true,
-          },
-        },
-      },
-      strategies = {
-        chat = {
-          -- adapter = "nv_inference",
-          -- or
-          adapter = "copilot",
-        },
-        inline = {
-          -- adapter = "nv_inference",
-          -- or
-          adapter = "copilot",
-        },
-      },
-    },
-  },
+  -- {
+  --   "olimorris/codecompanion.nvim",
+  --   dependencies = {
+  --     -- Add mcphub.nvim as a dependency
+  --     "ravitemer/mcphub.nvim",
+  --   },
+  --   opts = {
+  --     memory = {
+  --       opts = {
+  --         chat = {
+  --           enabled = true,
+  --           default_memory = "default",
+  --         },
+  --       },
+  --     },
+  --     adapters = {
+  --       http = {
+  --         copilot = function()
+  --           return require("codecompanion.adapters").extend("copilot", {
+  --             schema = {
+  --               model = {
+  --                 default = "claude-sonnet-4.5",
+  --               },
+  --             },
+  --           })
+  --         end,
+  --         nv_inference = function()
+  --           return require("codecompanion.adapters").extend("azure_openai", {
+  --             env = {
+  --               api_key = vim.env.NV_INFERENCE_HUB_APIKEY,
+  --               endpoint = vim.env.NV_INFERENCE_HUB_URL,
+  --               chat_url = "/v1/chat/completions",
+  --             },
+  --             schema = {
+  --               model = {
+  --                 default = "azure/openai/gpt-5.1-codex",
+  --               },
+  --               max_tokens = {
+  --                 default = 2048,
+  --               },
+  --               temperature = {
+  --                 default = 0.9,
+  --               },
+  --             },
+  --           })
+  --         end,
+  --       },
+  --     },
+  --     extensions = {
+  --       mcphub = {
+  --         callback = "mcphub.extensions.codecompanion",
+  --         opts = {
+  --           make_vars = true,
+  --           make_slash_commands = true,
+  --           show_result_in_chat = true,
+  --         },
+  --       },
+  --     },
+  --     strategies = {
+  --       chat = {
+  --         -- adapter = "nv_inference",
+  --         -- or
+  --         adapter = "copilot",
+  --       },
+  --       inline = {
+  --         -- adapter = "nv_inference",
+  --         -- or
+  --         adapter = "copilot",
+  --       },
+  --     },
+  --   },
+  -- },
   -- {
   --   "yetone/avante.nvim",
   --   event = "VeryLazy",

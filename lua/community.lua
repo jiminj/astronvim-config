@@ -15,7 +15,7 @@ return {
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.editing-support.bigfile-nvim" },
-  { import = "astrocommunity.editing-support.codecompanion-nvim" },
+  -- { import = "astrocommunity.editing-support.codecompanion-nvim" },
   { import = "astrocommunity.editing-support.dial-nvim" },
   { import = "astrocommunity.editing-support.mcphub-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
