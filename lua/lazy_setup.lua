@@ -16,8 +16,8 @@ require("lazy").setup({
   {
     import = "nvidia",
     cond = function()
-      local rootpath = require("lspconfig.util").root_pattern ".clangd"(vim.fn.getcwd())
-      return rootpath and rootpath:find "ndas" ~= nil
+      local rootpath = vim.fs.root(vim.fn.getcwd(), ".clangd")
+      return (rootpath ~= nil) and (rootpath:find "ndas" ~= nil)
     end,
   }, -- Load nvidia plugins conditionally
 } --[[@as LazySpec]], {

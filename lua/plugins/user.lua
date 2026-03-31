@@ -128,12 +128,6 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      inlay_hints = { enabled = true },
-    },
-  },
-  {
     "lewis6991/gitsigns.nvim",
     enabled = true,
     keys = {
@@ -156,7 +150,7 @@ return {
     end,
   },
   {
-    "echasnovski/mini.diff",
+    "nvim-mini/mini.diff",
     opts = {
       mappings = {
         textobject = "gh",
@@ -332,7 +326,7 @@ return {
     "otavioschwanck/arrow.nvim",
     dependencies = {
       {
-        "echasnovski/mini.icons",
+        "nvim-mini/mini.icons",
       },
     },
     opts = {
