@@ -128,12 +128,6 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      inlay_hints = { enabled = true },
-    },
-  },
-  {
     "lewis6991/gitsigns.nvim",
     enabled = true,
     keys = {
