@@ -150,7 +150,7 @@ return {
     end,
   },
   {
-    "echasnovski/mini.diff",
+    "nvim-mini/mini.diff",
     opts = {
       mappings = {
         textobject = "gh",
@@ -326,7 +326,7 @@ return {
     "otavioschwanck/arrow.nvim",
     dependencies = {
       {
-        "echasnovski/mini.icons",
+        "nvim-mini/mini.icons",
       },
     },
     opts = {
